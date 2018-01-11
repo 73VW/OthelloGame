@@ -61,8 +61,8 @@ namespace OthelloPedrettiFasmeyer.metier
                 return false;
 
             // Apply modification.
-            // Add pawn.
-            // Exchange lines of pawn.
+                // Add pawn.
+                // Exchange lines of pawn.
 
             return true;
         }
@@ -80,6 +80,16 @@ namespace OthelloPedrettiFasmeyer.metier
                 sum += check;
             }
             return sum;
+        }
+
+        /// <summary>A list of all legal moves for the current player.</summary>
+        public List<Operation> Ops()
+        {
+
+            //TO DO.
+
+            List<Operation> list = new List<Operation>();
+            return list;
         }
     }
 }

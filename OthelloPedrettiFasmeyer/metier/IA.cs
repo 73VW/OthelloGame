@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OthelloPedrettiFasmeyer.metier
 {
-    class IA //: IPlayable
+    class IA : IPlayable.IPlayable
     {
         private const String NAME = "FasmeyerPedretti";
         private State root;
@@ -83,7 +83,7 @@ namespace OthelloPedrettiFasmeyer.metier
             return board.Apply(new Operation(col, line, (isWhite) ? -1 : 1));
         }
 
-        public bool isPlayable(int col, int line, bool isWhite)
+        public bool IsPlayable(int col, int line, bool isWhite)
         {
             return board.isPlayable(new Operation(col, line, (isWhite) ? -1 : 1));
         }

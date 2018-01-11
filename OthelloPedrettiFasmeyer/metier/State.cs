@@ -23,8 +23,7 @@ namespace OthelloPedrettiFasmeyer
         /// <summary>A list of all legal moves for the current player.</summary>
         public List<Operation> Ops()
         {
-            // TO DO.
-            return null;
+            return board.Ops();
         }
 
         public State Apply(Operation op)
