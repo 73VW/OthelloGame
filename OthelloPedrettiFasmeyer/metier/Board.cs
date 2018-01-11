@@ -8,19 +8,78 @@ namespace OthelloPedrettiFasmeyer.metier
 {
     public class Board
     {
-        int[,] boxes = new int[8, 8];
+        private int[,] boxes = new int[8, 8];
+        public int[,] Boxes{ get{ return boxes.Clone() as int[,]; } }
+        private bool isWhiteTurn;
+        public bool IsWhiteTurn { get{ return isWhiteTurn; } }
 
         public Board()
         {
-            Console.WriteLine($"default value: {boxes[0, 0]}");
-
+            isWhiteTurn = false;
+            boxes[4, 4] = -1;
+            boxes[5, 4] = 1;
+            boxes[4, 5] = 1;
+            boxes[5, 5] = -1;
         }
 
-        public void play()
+        public Board(Board board)
         {
-            String test = Console.ReadLine();
-            Console.WriteLine(test);
+            isWhiteTurn = board.IsWhiteTurn;
+            boxes = board.Boxes;
         }
 
+        public Board(int[,] board, bool isWhiteTurn)
+        {
+            this.isWhiteTurn = isWhiteTurn;
+            boxes = board;
+        }
+
+        public bool isPlayable(Operation op)
+        {
+            if (op.player == 0)
+                //no modificaiton (final move).
+                return false;
+
+            if (Math.Abs(boxes[op.x, op.y]) == 1)
+                // board[x,y] not empty(error).
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// Modify the board with the player's move(Operation).
+        /// </summary>
+        /// <param name="op">Operation object, provide position of and player performing the operation.</param>
+        /// <returns>Wherer or not the operation has been applied properly.</returns>
+        public bool Apply(Operation op)
+        {
+
+            // TO DO.
+
+            if (!isPlayable(op))
+                return false;
+
+            // Apply modification.
+            // Add pawn.
+            // Exchange lines of pawn.
+
+            return true;
+        }
+
+        /// <summary>
+        /// Tells which player is winning.
+        /// </summary>
+        /// <returns>If positive, black is winning.</returns>
+        public int Eval()
+        {
+            // Black := 1; White := -1
+            int sum = 0;
+            foreach (int check in boxes)
+            {
+                sum += check;
+            }
+            return sum;
+        }
     }
 }

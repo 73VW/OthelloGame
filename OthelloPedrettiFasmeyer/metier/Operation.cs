@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OthelloPedrettiFasmeyer
 {
-    class Operation
+    public class Operation
     {
         public int x = 0;
         public int y = 0;

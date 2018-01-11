@@ -1,42 +1,37 @@
-﻿using System;
+﻿using OthelloPedrettiFasmeyer.metier;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OthelloPedrettiFasmeyer
 {
+    /// <summary>Specific methods for the AlphaBeta algorithm.</summary>
     class State
     {
-        private int[,] board = new int[8, 8];
-        int playerTurn;
+        private Board board;
 
-        // Constrictor.
-        public State(int[,] gameBoard, int playerTurn)
+        public State(Board gameBoard)
         {
             board = gameBoard;
-            this.playerTurn = playerTurn;
         }
 
-        // Public methodes.
-        public double Eval()
+        public int Eval()
         {
-            int sum = 0;
-            foreach (int check in board)
-            {
-                sum += check;
-            }
-            return sum;
+            // For now, same method as board.
+            return board.Eval();
         }
+
+        /// <summary>A list of all legal moves for the current player.</summary>
         public List<Operation> Ops()
         {
+            // TO DO.
             return null;
         }
+
         public State Apply(Operation op)
         {
-
-            return null;
+            Board newBoard = new Board(board);
+            newBoard.Apply(op);
+            return new State(newBoard);
         }
-
     }
 }

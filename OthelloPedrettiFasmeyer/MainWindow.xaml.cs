@@ -25,7 +25,8 @@ namespace OthelloPedrettiFasmeyer
         {
             InitializeComponent();
             Board board = new Board();
-            board.play();
+            Console.WriteLine(board.Eval());
+
         }
     }
 }
