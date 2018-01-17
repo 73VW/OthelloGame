@@ -91,5 +91,13 @@ namespace OthelloPedrettiFasmeyer.metier
             List<Operation> list = new List<Operation>();
             return list;
         }
+
+        public bool isFinished()
+        {
+
+            // TO DO.
+
+            return false;
+        }
     }
 }
