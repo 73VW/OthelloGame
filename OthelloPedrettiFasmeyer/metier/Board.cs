@@ -92,10 +92,10 @@ namespace OthelloPedrettiFasmeyer.metier
             return list;
         }
 
-        public bool isFinished()
+        public bool IsFinished()
         {
-
-            // TO DO.
+            if (this.Ops().Count == 0)
+                return true;
 
             return false;
         }
