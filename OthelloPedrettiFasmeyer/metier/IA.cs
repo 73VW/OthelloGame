@@ -50,12 +50,12 @@ namespace OthelloPedrettiFasmeyer.metier
 
         public int GetBlackScore()
         {
-            return root.Eval();
+            return board.Eval();
         }
 
         public int GetWhiteScore()
         {
-            return -root.Eval();
+            return -board.Eval();
         }
 
         public int[,] GetBoard()
