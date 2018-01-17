@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using OthelloPedrettiFasmeyer.metier;
 using System;
 using System.Collections.Generic;
@@ -5,15 +6,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+=======
+﻿using System;
+>>>>>>> Begining ui
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace OthelloPedrettiFasmeyer
 {
@@ -27,6 +25,37 @@ namespace OthelloPedrettiFasmeyer
             InitializeComponent();
             TestBoard();
 
+            Width = 800;
+            Height = 600;
+            MinWidth = Width;
+            MinHeight = Height;
+
+            updateGridSize();
+
+            //Create the board
+            for (int i = 0; i < 8; i++)
+            {
+                ColumnDefinition columnDefinition = new ColumnDefinition();
+                RowDefinition rowDefinition = new RowDefinition();
+                board.ColumnDefinitions.Add(columnDefinition);
+                board.RowDefinitions.Add(rowDefinition);
+            }
+
+            Button b;
+            //Fill each case of the board
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    b = new Button();
+                    b.Click += new RoutedEventHandler(button_Click);
+                    Grid.SetRow(b, i);
+                    Grid.SetColumn(b, j);
+                    board.Children.Add(b);
+                }
+            }
+
+            Othello.Instance.InitGame(this);
         }
 
         /// <summary>
@@ -65,6 +94,28 @@ namespace OthelloPedrettiFasmeyer
                 Debug.Assert(result == false);
             }
             Console.WriteLine("---------------------------------");
+        }
+
+        protected void button_Click(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            //identify which button was clicked and perform necessary actions
+            Debug.WriteLine("Click!");
+        }
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            updateGridSize();
+        }
+
+        private void updateGridSize()
+        {
+            board.Width = Width / 2;
+            board.Height = Height / 2;
+            Thickness margin = Margin;
+            margin.Left = margin.Right = Width / 4;
+            margin.Top = margin.Bottom = Height / 4;
+            board.Margin = margin;
         }
     }
 }

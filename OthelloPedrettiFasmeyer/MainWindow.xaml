@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OthelloPedrettiFasmeyer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="MainWindow" Height="600" Width="800" Background="#FF040000" SizeChanged="Window_SizeChanged">
+    <Canvas Name="MainCanevas">
+        <DockPanel Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0"  Canvas.Left="0" Canvas.Top="0" />
+        <Grid Name="board"/>
+    </Canvas>
+
 </Window>
