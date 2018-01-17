@@ -85,7 +85,7 @@ namespace OthelloPedrettiFasmeyer.metier
 
         public bool IsPlayable(int col, int line, bool isWhite)
         {
-            return board.isPlayable(new Operation(col, line, (isWhite) ? -1 : 1));
+            return board.IsPlayable(new Operation(col, line, (isWhite) ? -1 : 1));
         }
     }
 }

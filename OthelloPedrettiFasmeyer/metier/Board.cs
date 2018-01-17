@@ -34,7 +34,7 @@ namespace OthelloPedrettiFasmeyer.metier
             boxes = board;
         }
 
-        public bool isPlayable(Operation op)
+        public bool IsPlayable(Operation op)
         {
             if (op.player == 0)
                 //no modificaiton (final move).
@@ -43,6 +43,11 @@ namespace OthelloPedrettiFasmeyer.metier
             if (Math.Abs(boxes[op.x, op.y]) == 1)
                 // board[x,y] not empty(error).
                 return false;
+
+            // TO DO.
+            // check for lignes and diagonals.
+            int currentPlayer = (isWhiteTurn) ? -1: 1;
+            bool result = LegalMove(op, currentPlayer);
 
             return true;
         }
@@ -57,12 +62,13 @@ namespace OthelloPedrettiFasmeyer.metier
 
             // TO DO.
 
-            if (!isPlayable(op))
+            if (!IsPlayable(op))
                 return false;
 
             // Apply modification.
                 // Add pawn.
                 // Exchange lines of pawn.
+                //change player turn.
 
             return true;
         }
@@ -97,6 +103,38 @@ namespace OthelloPedrettiFasmeyer.metier
             if (this.Ops().Count == 0)
                 return true;
 
+            return false;
+        }
+
+        private bool LegalMove(Operation op, int currentPlayer)
+        {
+            // opponent pawn = -currentPlayer.
+            bool checkRight = false;
+            bool checkLeft = false;
+            if (op.x < boxes.Length-2 &&  boxes[op.x + 1, op.y] == -currentPlayer)
+            {
+                checkRight = true;
+            }
+            if (op.x > 1 && boxes[op.x - 1, op.y] == -currentPlayer)
+            {
+                checkLeft = true;
+            }
+
+            int x = op.x + 2;
+            while (checkRight && op.x < boxes.Length)
+            {
+                if (boxes[x, op.y] == currentPlayer)
+                    return true;
+                x++;
+            }
+
+            x = op.x -2;
+            while (checkLeft && op.x > 0)
+            {
+                if (boxes[x, op.y] == currentPlayer)
+                    return true;
+                x--;
+            }
             return false;
         }
     }
