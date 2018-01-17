@@ -44,12 +44,9 @@ namespace OthelloPedrettiFasmeyer.metier
                 // board[x,y] not empty(error).
                 return false;
 
-            // TO DO.
             // check for lignes and diagonals.
             int currentPlayer = (isWhiteTurn) ? -1: 1;
-            bool result = LegalMove(op, currentPlayer);
-
-            return true;
+            return LegalMove(op, currentPlayer);
         }
 
         /// <summary>
@@ -109,6 +106,8 @@ namespace OthelloPedrettiFasmeyer.metier
         private bool LegalMove(Operation op, int currentPlayer)
         {
             // opponent pawn = -currentPlayer.
+
+            //Horizontal
             bool checkRight = false;
             bool checkLeft = false;
             if (op.x < boxes.Length-2 &&  boxes[op.x + 1, op.y] == -currentPlayer)
@@ -123,18 +122,135 @@ namespace OthelloPedrettiFasmeyer.metier
             int x = op.x + 2;
             while (checkRight && op.x < boxes.Length)
             {
-                if (boxes[x, op.y] == currentPlayer)
+                int result = boxes[x, op.y];
+                if (result == currentPlayer)
                     return true;
+                else if (result == 0)
+                    checkRight = false;
                 x++;
             }
 
             x = op.x -2;
-            while (checkLeft && op.x > 0)
+            while (checkLeft && op.x >= 0)
             {
-                if (boxes[x, op.y] == currentPlayer)
+                int result = boxes[x, op.y];
+                if (result == currentPlayer)
                     return true;
+                else if (result == 0)
+                    checkLeft = false;
                 x--;
             }
+
+            //Vertical
+            bool checkUp = false;
+            bool checkDown = false;
+            if (op.y < boxes.Length - 2 && boxes[op.x, op.y + 1] == -currentPlayer)
+            {
+                checkUp = true;
+            }
+            if (op.y > 1 && boxes[op.x, op.y - 1] == -currentPlayer)
+            {
+                checkDown = true;
+            }
+
+            int y = op.y + 2;
+            while (checkUp && op.y < boxes.Length)
+            {
+                int result = boxes[op.x, y];
+                if (result == currentPlayer)
+                    return true;
+                else if (result == 0)
+                    checkUp = false;
+                y++;
+            }
+
+            y = op.y - 2;
+            while (checkDown && op.y >= 0)
+            {
+                int result = boxes[op.x, y];
+                if (result == currentPlayer)
+                    return true;
+                else if (result == 0)
+                    checkDown = false;
+                y--;
+            }
+
+            //Diagonal1
+            bool checkUpRight = false;
+            bool checkDownLeft = false;
+            if (op.y < boxes.Length - 2 && op.x < boxes.Length - 2 && boxes[op.x + 1, op.y + 1] == -currentPlayer)
+            {
+                checkUpRight = true;
+            }
+            if (op.y > 1 && op.x > 1 && boxes[op.x - 1, op.y - 1] == -currentPlayer)
+            {
+                checkDownLeft = true;
+            }
+
+            y = op.y + 2;
+            x = op.x + 2; ;
+            while (checkUpRight && op.y < boxes.Length && op.x < boxes.Length)
+            {
+                int result = boxes[x, y];
+                if (result == currentPlayer)
+                    return true;
+                else if (result == 0)
+                    checkUpRight = false;
+                x++;
+                y++;
+            }
+
+            y = op.y - 2;
+            x = op.x - 2; ;
+            while (checkDownLeft && op.y >=0 && op.x >= 0)
+            {
+                int result = boxes[x, y];
+                if (result == currentPlayer)
+                    return true;
+                else if (result == 0)
+                    checkDownLeft = false;
+                x--;
+                y--;
+            }
+
+            //Diagonal2
+            bool checkUpLeft = false;
+            bool checkDownRight = false;
+            if (op.y < boxes.Length - 2 && op.x > 1 && boxes[op.x - 1, op.y + 1] == -currentPlayer)
+            {
+                checkUpLeft = true;
+            }
+            if (op.y > 1 && op.x < boxes.Length - 2 && boxes[op.x + 1, op.y - 1] == -currentPlayer)
+            {
+                checkDownRight = true;
+            }
+
+            y = op.y + 2;
+            x = op.x - 2; ;
+            while (checkUpLeft && op.y < boxes.Length && op.x <= 0)
+            {
+                int result = boxes[x, y];
+                if (result == currentPlayer)
+                    return true;
+                else if (result == 0)
+                    checkUpLeft = false;
+                x--;
+                y++;
+            }
+
+            y = op.y - 2;
+            x = op.x + 2; ;
+            while (checkDownRight && op.y >= 0 && op.x < boxes.Length)
+            {
+                int result = boxes[x, y];
+                if (result == currentPlayer)
+                    return true;
+                else if (result == 0)
+                    checkDownRight = false;
+                x++;
+                y--;
+            }
+
             return false;
         }
     }
