@@ -35,10 +35,10 @@ namespace OthelloPedrettiFasmeyer.metier
         public BoardB()
         {
             isWhiteTurn = false;
+            boxes[3, 3] = -1;
+            boxes[4, 3] = 1;
+            boxes[3, 4] = 1;
             boxes[4, 4] = -1;
-            boxes[5, 4] = 1;
-            boxes[4, 5] = 1;
-            boxes[5, 5] = -1;
         }
 
         public BoardB(BoardB board)
@@ -51,6 +51,19 @@ namespace OthelloPedrettiFasmeyer.metier
         {
             this.isWhiteTurn = isWhiteTurn;
             boxes = board;
+        }
+
+        public void Print()
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    Console.Write("{0,2} ", boxes[j, i]);
+                }
+                Console.Write("\n");
+            }
+            Console.Write("\n");
         }
 
         public bool IsPlayable(Operation op)
@@ -84,6 +97,8 @@ namespace OthelloPedrettiFasmeyer.metier
                 return false;
 
             int currentPlayer = (isWhiteTurn) ? -1 : 1;
+            if (op.player != currentPlayer)
+                return false;
 
             // Create a list of all modifications to be done.
             List<Tuple<int, int>> moveList = new List<Tuple<int, int>>();
@@ -110,10 +125,10 @@ namespace OthelloPedrettiFasmeyer.metier
                 int y = op.y;
                 int destX = move.Item1;
                 int destY = move.Item2;
-                int incX = (x > op.x)? 1 : (x < op.x)? -1 : 0;
-                int incY = (y > op.y)? 1 : (y < op.y)? -1 : 0;
+                int incX = (destX > op.x)? 1 : (destX < op.x)? -1 : 0;
+                int incY = (destY > op.y)? 1 : (destY < op.y)? -1 : 0;
 
-                while (x != destX && y != destY)
+                while (x != destX || y != destY)
                 {
                     if (boxes[x, y] == -currentPlayer)
                         boxes[x, y] = currentPlayer;
@@ -124,7 +139,7 @@ namespace OthelloPedrettiFasmeyer.metier
             }
 
             //change player turn.
-            isWhiteTurn = (isWhiteTurn) ? false: true;
+            isWhiteTurn = !isWhiteTurn;
 
             return true;
         }
@@ -149,16 +164,14 @@ namespace OthelloPedrettiFasmeyer.metier
         {
             int currentPlayer = (isWhiteTurn) ? -1 : 1;
             List<Operation> opList = new List<Operation>();
-            for (int i = 0, j=0; i<8 || j <8; i++ )
+            for (int i = 0; i < 8; i++ )
             {
-                Operation op = new Operation(i, j, currentPlayer);
-                if (IsPlayable(op))
-                    opList.Add(op);
-
-                if (i == 8)
-                    j++;
-
-                i %= 8;
+                for (int j = 0; j < 8; j++)
+                {
+                    Operation op = new Operation(i, j, currentPlayer);
+                    if (IsPlayable(op))
+                        opList.Add(op);
+                }                
             }
             return opList;
         }
@@ -175,11 +188,11 @@ namespace OthelloPedrettiFasmeyer.metier
 
             // Are players stuck?
             if (Ops().Count == 0)
-                isWhiteTurn = (isWhiteTurn) ? false : true;
+                isWhiteTurn = !isWhiteTurn;
                 if (Ops().Count == 0)
                     return true;
 
-                isWhiteTurn = (isWhiteTurn) ? false : true;
+                isWhiteTurn = !isWhiteTurn;
 
             return false;
         }
@@ -216,11 +229,14 @@ namespace OthelloPedrettiFasmeyer.metier
 
             // Incorect input.
             if ((incX == 0 && incY == 0) || Math.Abs(incX) > 1 || Math.Abs(incY) >1)
-                return Tuple.Create(-1, -1);
+                return INVALID;
+
+            if (x >= MAX || x < MIN || y >= MAX || y < MIN)
+                return INVALID;
 
             // Box next to operation must be owned by the opponent to even be a legal move. Exemple: xox.
             if (boxes[x, y] != -currentPlayer)
-                return Tuple.Create(-1, -1);
+                return INVALID;
 
             x += incX;
             y += incY;
@@ -228,7 +244,7 @@ namespace OthelloPedrettiFasmeyer.metier
             {
                 // If there is a hole in the line, it can not be a legal move.
                 if (boxes[x, y] == 0)
-                    return Tuple.Create(-1, -1);
+                    return INVALID;
 
                 // If we found our own pawn, we got a legal move.
                 if (boxes[x, y] == currentPlayer)
@@ -239,7 +255,7 @@ namespace OthelloPedrettiFasmeyer.metier
             }
 
             //Noting found.
-            return Tuple.Create(-1, -1);
+            return INVALID;
         }
     }
 }
