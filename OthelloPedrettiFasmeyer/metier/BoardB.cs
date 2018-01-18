@@ -14,6 +14,7 @@ namespace OthelloPedrettiFasmeyer.metier
         private bool isWhiteTurn;
         public bool IsWhiteTurn { get{ return isWhiteTurn; } }
 
+        // Not implemented yet.
         public bool useTimer = false;
         public int timer = 0;
 
