@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="metier\Board.cs" />
     <Compile Include="metier\Operation.cs" />
     <Compile Include="metier\State.cs" />
     <Page Include="MainWindow.xaml">
@@ -74,7 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="metier\IA.cs" />
-    <Compile Include="metier\Board.cs" />
+    <Compile Include="metier\BoardB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

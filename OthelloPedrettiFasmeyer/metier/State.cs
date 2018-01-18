@@ -7,9 +7,9 @@ namespace OthelloPedrettiFasmeyer
     /// <summary>Specific methods for the AlphaBeta algorithm.</summary>
     class State
     {
-        private Board board;
+        private BoardB board;
 
-        public State(Board gameBoard)
+        public State(BoardB gameBoard)
         {
             board = gameBoard;
         }
@@ -28,7 +28,7 @@ namespace OthelloPedrettiFasmeyer
 
         public State Apply(Operation op)
         {
-            Board newBoard = new Board(board);
+            BoardB newBoard = new BoardB(board);
             newBoard.Apply(op);
             return new State(newBoard);
         }

@@ -12,11 +12,11 @@ namespace OthelloPedrettiFasmeyer.metier
     {
         private const String NAME = "FasmeyerPedretti";
         private State root;
-        private Board board;
+        private BoardB board;
 
         public IA()
         {
-            board = new Board();
+            board = new BoardB();
             root = new State(board);
         }
 
@@ -70,7 +70,7 @@ namespace OthelloPedrettiFasmeyer.metier
 
         public Tuple<int, int> GetNextMove(int[,] board, int level, bool isWhiteTurn)
         {
-            this.board = new Board(board, isWhiteTurn);
+            this.board = new BoardB(board, isWhiteTurn);
             root = new State(this.board);
 
             Tuple<double, Operation> bestMove = Alphabeta(root, level, (isWhiteTurn) ? -1 : 1, root.Eval());

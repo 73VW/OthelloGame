@@ -24,7 +24,7 @@ namespace OthelloPedrettiFasmeyer
         public MainWindow()
         {
             InitializeComponent();
-            Board board = new Board();
+            BoardB board = new BoardB();
             Console.WriteLine(board.Eval());
 
         }
