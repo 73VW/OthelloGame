@@ -1,17 +1,15 @@
-<<<<<<< HEAD
-﻿using OthelloPedrettiFasmeyer.metier;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-=======
-﻿using System;
->>>>>>> Begining ui
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Diagnostics;
+using OthelloPedrettiFasmeyer.metier;
+using System.Windows.Media;
+using System.Windows.Resources;
+using System.Windows.Media.Imaging;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.IO;
+using System.Drawing.Imaging;
+using System.Windows.Input;
 
 namespace OthelloPedrettiFasmeyer
 {
@@ -20,43 +18,108 @@ namespace OthelloPedrettiFasmeyer
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Board board;
+        private int nbEmptyCells;
+        private bool whiteTurn;
+        private ImageBrush whiteBrush;
+        private ImageBrush blackBrush;
+
         public MainWindow()
         {
             InitializeComponent();
-            TestBoard();
+            MinWidth = 800;
+            MinHeight = 600;
 
-            Width = 800;
-            Height = 600;
-            MinWidth = Width;
-            MinHeight = Height;
+            InitGame();
 
-            updateGridSize();
+            LoadPictures();
+        }
 
+        private void LoadPictures()
+        {
+            whiteBrush = BrushCreator("fig1.png");
+            blackBrush = BrushCreator("fig2.png");
+            BtnWhitePlayer.Background = whiteBrush;
+            BtnBlackPlayer.Background = blackBrush;
+
+            Button b = (Button)gameGrid.Children[0];
+            b.Background = whiteBrush;
+            b = (Button)gameGrid.Children[1];
+            b.Background = blackBrush;
+        }
+
+        private ImageBrush BrushCreator(string filename)
+        {
+            string path = "images/" + filename;
+            Uri resourceHeroe = new Uri(path, UriKind.Relative);
+
+            StreamResourceInfo streamInfo = Application.GetResourceStream(resourceHeroe);
+            BitmapFrame temp = BitmapFrame.Create(streamInfo.Stream);
+
+            ImageBrush brush = new ImageBrush();
+            brush.Stretch = Stretch.UniformToFill;
+            brush.ImageSource = temp;
+            return brush;
+        }
+
+        private void InitGame()
+        {
             //Create the board
             for (int i = 0; i < 8; i++)
             {
                 ColumnDefinition columnDefinition = new ColumnDefinition();
                 RowDefinition rowDefinition = new RowDefinition();
-                board.ColumnDefinitions.Add(columnDefinition);
-                board.RowDefinitions.Add(rowDefinition);
+                gameGrid.ColumnDefinitions.Add(columnDefinition);
+                gameGrid.RowDefinitions.Add(rowDefinition);
             }
+            Style style = this.FindResource("MyButtonStyle") as Style;
 
-            Button b;
             //Fill each case of the board
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    b = new Button();
+                    Button b = new Button
+                    {
+                        Style = style
+                    };
                     b.Click += new RoutedEventHandler(button_Click);
+                    b.BorderBrush = null;
+                    b.Background = System.Windows.Media.Brushes.Transparent;
                     Grid.SetRow(b, i);
                     Grid.SetColumn(b, j);
-                    board.Children.Add(b);
+                    gameGrid.Children.Add(b);
                 }
             }
 
-            Othello.Instance.InitGame(this);
+            this.board = new Board();
+
+            this.nbEmptyCells = 0;
+
+            this.whiteTurn = true;
+
+            //updateGrid();
+
+
         }
+        /*
+        private void updateGrid()
+        {
+            foreach (Button button in gameGrid.Children)
+            {
+                var col = Grid.GetColumn(button);
+                var row = Grid.GetRow(button);
+                if (this.board[col, row] == (int)EColorType.black)
+                    button.Background = new SolidColorBrush(Colors.Black);
+                else if (this.board[col, row] == (int)EColorType.black)
+                    button.Background = new SolidColorBrush(Colors.White);
+                else
+                {
+                    button.Content = "";
+                    nbEmptyCells++;
+                }
+            }
+        }*/
 
         /// <summary>
         /// Testing positive and negative cases of all BoardB methods.
@@ -101,21 +164,6 @@ namespace OthelloPedrettiFasmeyer
             Button button = sender as Button;
             //identify which button was clicked and perform necessary actions
             Debug.WriteLine("Click!");
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            updateGridSize();
-        }
-
-        private void updateGridSize()
-        {
-            board.Width = Width / 2;
-            board.Height = Height / 2;
-            Thickness margin = Margin;
-            margin.Left = margin.Right = Width / 4;
-            margin.Top = margin.Bottom = Height / 4;
-            board.Margin = margin;
         }
     }
 }

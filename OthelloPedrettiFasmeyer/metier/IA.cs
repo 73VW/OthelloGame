@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OthelloPedrettiFasmeyer.metier
 {
-    class IA : IPlayable.IPlayable
+    class IA
     {
         private const String NAME = "FasmeyerPedretti";
         private State root;

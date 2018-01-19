@@ -1,14 +1,90 @@
-﻿<Window x:Class="OthelloPedrettiFasmeyer.MainWindow"
+﻿<Window x:Name="Space_Othello" x:Class="OthelloPedrettiFasmeyer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OthelloPedrettiFasmeyer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="800" Background="#FF040000" SizeChanged="Window_SizeChanged">
-    <Canvas Name="MainCanevas">
-        <DockPanel Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0"  Canvas.Left="0" Canvas.Top="0" />
-        <Grid Name="board"/>
-    </Canvas>
+        Title="Space Othello" Width="800" Height="600" Background="Black" Foreground="White">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="0.2"/>
+            <Setter Property="TextElement.FontFamily" 
+            Value="pack://application:,,,/fonts/#Pixeled" />
+        </Style>
+        <Style x:Key="PixeledGreen">
+            <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
+            <Setter Property="TextElement.Foreground"  Value="#FF00FF17" />
+            <Setter Property="TextElement.FontSize" Value="20"/>
+        </Style>
+        <Style x:Key="PixeledPink">
+            <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
+            <Setter Property="TextElement.Foreground"  Value="#FF00C5" />
+            <Setter Property="TextElement.FontSize" Value="20"/>
+        </Style>
+
+        <Style x:Key="MyButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <Border BorderThickness="0.1" BorderBrush="White"></Border>
+                            <ContentPresenter HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PannelButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </Window.Resources>
+
+
+    <DockPanel LastChildFill="True" Margin="10,0,10,0">
+
+        <StackPanel Name="Controls" Margin="0" Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button MinWidth="100">Reset</Button>
+            <Button MinWidth="100" Margin="10,0,0,0">Save</Button>
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Center" Style="{StaticResource PixeledPink}" >
+            <TextBlock x:Name="BeforeScoreWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Top" >Score</TextBlock>
+            <TextBlock x:Name="ScoreWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Top">0</TextBlock>
+            <TextBlock x:Name="BeforeTimerWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">Temps</TextBlock>
+            <TextBlock x:Name="TimerWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">0</TextBlock>
+
+            <StackPanel x:Name="PanelWhite" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,50,0,0">
+                <Button x:Name="BtnWhitePlayer" Width="100" Height="100"  BorderBrush="{x:Null}" Style="{StaticResource PannelButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Vertical" DockPanel.Dock="Right" HorizontalAlignment="Right" Style="{StaticResource PixeledGreen}">
+            <TextBlock x:Name="BeforeScoreBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Score"/></TextBlock>
+            <TextBlock x:Name="ScoreBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="0"/></TextBlock>
+            <TextBlock x:Name="BeforeTimerBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Temps"/></TextBlock>
+            <TextBlock x:Name="TimerBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">0</TextBlock>
+
+            <StackPanel x:Name="PanelBlack" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0">
+                <Button x:Name="BtnBlackPlayer"  BorderBrush="{x:Null}" Style="{StaticResource PannelButtonStyle}" Width="100" Height="100"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <Grid  x:Name="gameGrid" Margin="10" DockPanel.Dock="Top" Width="500" Height="500" MinWidth="500" MinHeight="500" MaxWidth="500" MaxHeight="500" HorizontalAlignment="Center"/>
+    </DockPanel>
 
 </Window>
