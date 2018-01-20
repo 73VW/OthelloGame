@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IPlayable">
+      <HintPath>metier\IPlayable.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -66,17 +69,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EColorType.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="metier\Board.cs" />
-    <Compile Include="metier\IA.cs" />
-    <Compile Include="metier\Operation.cs" />
-    <Compile Include="metier\State.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -108,7 +106,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="images\fig2.png" />
-    <Content Include="IPlayable.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OthelloIAG5\OthelloIAG5.csproj">
+      <Project>{a9ba2c58-ce40-4a59-b4b6-bf097a09d7ba}</Project>
+      <Name>OthelloIAG5</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

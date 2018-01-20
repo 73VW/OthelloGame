@@ -61,24 +61,24 @@
             <Button MinWidth="100" Margin="10,0,0,0">Save</Button>
         </StackPanel>
 
-        <StackPanel Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Center" Style="{StaticResource PixeledPink}" >
+        <StackPanel x:Name="PanelWhite" Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Center" Style="{StaticResource PixeledPink}" >
             <TextBlock x:Name="BeforeScoreWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Top" >Score</TextBlock>
             <TextBlock x:Name="ScoreWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Top">0</TextBlock>
             <TextBlock x:Name="BeforeTimerWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">Temps</TextBlock>
             <TextBlock x:Name="TimerWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">0</TextBlock>
 
-            <StackPanel x:Name="PanelWhite" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="0,50,0,0">
-                <Button x:Name="BtnWhitePlayer" Width="100" Height="100"  BorderBrush="{x:Null}" Style="{StaticResource PannelButtonStyle}"  HorizontalAlignment="Center" VerticalAlignment="Center" Background="White">
+            <StackPanel x:Name="PanelBtnWhitePlayer" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0">
+                <Button x:Name="BtnWhitePlayer"  BorderBrush="{x:Null}" Style="{StaticResource PannelButtonStyle}" Width="100" Height="100">
                 </Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Vertical" DockPanel.Dock="Right" HorizontalAlignment="Right" Style="{StaticResource PixeledGreen}">
+        <StackPanel x:Name="PanelBlack" Orientation="Vertical" DockPanel.Dock="Right" HorizontalAlignment="Right" Style="{StaticResource PixeledGreen}">
             <TextBlock x:Name="BeforeScoreBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Score"/></TextBlock>
             <TextBlock x:Name="ScoreBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="0"/></TextBlock>
             <TextBlock x:Name="BeforeTimerBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Temps"/></TextBlock>
             <TextBlock x:Name="TimerBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">0</TextBlock>
 
-            <StackPanel x:Name="PanelBlack" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0">
+            <StackPanel x:Name="PanelBtnBlackPlayer" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0">
                 <Button x:Name="BtnBlackPlayer"  BorderBrush="{x:Null}" Style="{StaticResource PannelButtonStyle}" Width="100" Height="100"/>
             </StackPanel>
         </StackPanel>
