@@ -40,7 +40,7 @@ namespace OthelloIAG5
                 state.Eval();
 
                 int[,] evalBoard = state.EvalMatrix;
-                Console.WriteLine("Displaying evalMatrix");
+                Console.WriteLine("Displaying final evalMatrix");
                 state.Print();
                 Debug.Assert(evalBoard[0, 1] == 120);
                 Debug.Assert(evalBoard[1, 0] == 120);
