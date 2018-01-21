@@ -8,10 +8,23 @@ namespace OthelloIAG5
     {
         private EBoxType currentType;
 
+        // Matrix from http://dhconnelly.com/paip-python/docs/paip/othello.html
+
         public State(int[,] currentState, EBoxType type)
         {
             this.boxes = currentState;
             this.currentType = type;
+            this.evalMatrix = new int[8,8]
+            {
+                    { 120, -20,  20,   5,   5,  20, -20, 120},
+                    { -20, -40,  -5,  -5,  -5,  -5, -40, -20},
+                    {  20,  -5,  15,   3,   3,  15,  -5,  20},
+                    {   5,  -5,   3,   3,   3,   3,  -5,   5},
+                    {   5,  -5,   3,   3,   3,   3,  -5,   5},
+                    {  20,  -5,  15,   3,   3,  15,  -5,  20},
+                    { -20, -40,  -5,  -5,  -5,  -5, -40, -20},
+                    { 120, -20,  20,   5,   5,  20, -20, 120},
+            };
         }
 
         public EBoxType CurrentType
@@ -21,31 +34,29 @@ namespace OthelloIAG5
 
         public double Eval()
         {
-            int eval = 0;
-            for(int row = 0; row < Board.BOARD_SIZE; row++)
+            int playerScore = 0;
+            int opponentScore = 0;
+
+            // Dynamically modify evalMatrix.
+            for (int row = 0; row < Board.BOARD_SIZE; row++)
             {
                 for (int col = 0; col < Board.BOARD_SIZE; col++)
                 {
-
-                    //search for corners
-                    if ((row == 0 && (col == 0 || col == Board.BOARD_SIZE - 1)) || (row == Board.BOARD_SIZE - 1 && (col == 0 || col == Board.BOARD_SIZE - 1))) eval += 20;
-                    else
-                    {
-                        //search for borders
-                        //left
-                        if (col == 0) eval += 5;
-                        //right
-                        if (col == Board.BOARD_SIZE - 1) eval += 5;
-                        //top
-                        if (row == 0) eval += 5;
-                        //bottom
-                        if (row == Board.BOARD_SIZE - 1) eval += 5;
-
-                    }
-
+                    Definitive(row, col);
                 }
             }
-            return eval;
+
+            for (int row = 0; row < Board.BOARD_SIZE; row++)
+            {
+                for (int col = 0; col < Board.BOARD_SIZE; col++)
+                {
+                    if (boxes[row, col] == (int)currentType)
+                        playerScore += evalMatrix[row, col];
+                    else if (boxes[row, col] != (int)EBoxType.free)
+                        opponentScore += evalMatrix[row, col];
+                }
+            }
+            return playerScore - opponentScore;
         }
 
         public bool Final()

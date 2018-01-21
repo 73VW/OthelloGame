@@ -21,6 +21,22 @@ namespace OthelloIAG5
             ResetBoxes();
         }
 
+        public new void Print()
+        {
+            for (int i = 0; i < BOARD_SIZE; i++)
+            {
+                for (int j = 0; j < BOARD_SIZE; j++)
+                {
+                    char display = '_';
+                    if (boxes[j, i] == 1) display = 'b';
+                    else if (boxes[j, i] == 0) display = 'w';
+                    Console.Write("{0,2} ", display);
+                }
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+
         public void ResetBoxes()
         {
 
