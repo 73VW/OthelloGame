@@ -32,7 +32,7 @@ namespace OthelloIAG5
                 return Tuple.Create(root.Eval(), Tuple.Create(-1,-1));
             }
             double optVal = minOrMax * Double.NegativeInfinity;
-            Tuple<int, int> optOp = null;
+            Tuple<int, int> optOp = Tuple.Create(-1,-1);
             foreach (Tuple<int,int> op in root.Ops())
             {
                 State newRoot = root.Apply(op);
