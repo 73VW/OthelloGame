@@ -32,7 +32,7 @@ namespace OthelloIAG5
                 return Tuple.Create(root.Eval(), Tuple.Create(-1,-1));
             }
             double optVal = minOrMax * Double.NegativeInfinity;
-            Tuple<int, int> optOp = null;
+            Tuple<int, int> optOp = Tuple.Create(-1, -1);
             foreach (Tuple<int,int> op in root.Ops())
             {
                 State newRoot = root.Apply(op);
@@ -57,8 +57,8 @@ namespace OthelloIAG5
             EBoxType type;
             if (whiteTurn) type = EBoxType.white;
             else type = EBoxType.black;
-            State currentState = new State(board.GetBoard(), type);
-            Tuple<double, Tuple<int, int>> bestMove = Alphabeta(currentState, level, 1, currentState.Eval());
+            State currentState = new State(game, type);
+            Tuple<double, Tuple<int, int>> bestMove = Alphabeta(root: currentState, depth: level, minOrMax: -1, parentValue: currentState.Eval());
             Tuple<int, int> nextMove = bestMove.Item2;
             return nextMove;
         }
