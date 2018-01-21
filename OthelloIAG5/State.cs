@@ -32,30 +32,45 @@ namespace OthelloIAG5
             get => currentType;
         }
 
+        /// <summary>
+        /// Determines how well is a given player performing.
+        /// A number of values are used to determine what makes a good game state:
+        ///     The number of pawns on the board.
+        ///     The number of avaliable moves.
+        ///     The number of definitive pawns (not modifiable by opponent).
+        ///     The position of the pawn relative to the borders and critical boxes.
+        /// We will note that most of those values are calculated trough evaluation matrix. 
+        /// Only the number of avaliable moves is calculated without the matrix. 
+        /// </summary>
+        /// <returns>
+        /// Performance of the given player - performance of its opponent.
+        /// </returns>
         public double Eval()
         {
             int playerScore = 0;
             int opponentScore = 0;
 
-            // Dynamically modify evalMatrix.
             for (int row = 0; row < Board.BOARD_SIZE; row++)
             {
                 for (int col = 0; col < Board.BOARD_SIZE; col++)
                 {
+                    // Determines which boxes are definitive (opponent can not take it back) and set them at 120 in the evalMatrix.
                     Definitive(row, col);
-                }
-            }
 
-            for (int row = 0; row < Board.BOARD_SIZE; row++)
-            {
-                for (int col = 0; col < Board.BOARD_SIZE; col++)
-                {
+                    // Evaluate all pawns using the ponderation (Multiply boxes[x,y] with evalMatrix[x,y]).
+                    // Player score.
                     if (boxes[row, col] == (int)currentType)
                         playerScore += evalMatrix[row, col];
+                    // Opponent score.
                     else if (boxes[row, col] != (int)EBoxType.free)
                         opponentScore += evalMatrix[row, col];
                 }
             }
+
+            // Calculates the number of avaliable moves.
+            // ChangeBox(col, row, currentType == EBoxType.white);
+            // ChangeBox(col, row, currentType != EBoxType.white);
+
             return playerScore - opponentScore;
         }
 
