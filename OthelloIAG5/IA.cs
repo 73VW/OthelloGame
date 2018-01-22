@@ -8,6 +8,7 @@ using IPlayable;
 
 namespace OthelloIAG5
 {
+    [Serializable]
     public class IA
     {
         private const int MAXDEPTH = 4;
@@ -33,7 +34,11 @@ namespace OthelloIAG5
             }
             double optVal = minOrMax * Double.NegativeInfinity;
             Tuple<int, int> optOp = Tuple.Create(-1,-1);
-            foreach (Tuple<int,int> op in root.Ops())
+            var ops = root.Ops();
+            if (ops.Count > 0)
+                optOp = ops[0];
+
+            foreach (Tuple<int,int> op in ops)
             {
                 State newRoot = root.Apply(op);
                 Tuple<double, Tuple<int, int>> valDummy = Alphabeta(newRoot, depth - 1, -minOrMax, optVal);

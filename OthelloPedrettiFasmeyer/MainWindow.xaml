@@ -16,12 +16,21 @@
         <Style x:Key="PixeledGreen">
             <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
             <Setter Property="TextElement.Foreground"  Value="#FF00FF17" />
-            <Setter Property="TextElement.FontSize" Value="20"/>
+            <Setter Property="TextElement.FontSize" Value="15"/>
         </Style>
         <Style x:Key="PixeledPink">
             <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
             <Setter Property="TextElement.Foreground"  Value="#FF00C5" />
-            <Setter Property="TextElement.FontSize" Value="20"/>
+            <Setter Property="TextElement.FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="Button" x:Key="MenuButtonStyle">
+            <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
+            <Setter Property="Background" Value="#ff0033cc"/>
+            <Setter Property="TextElement.Foreground"  Value="white" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextElement.FontSize" Value="15"/>
+
         </Style>
 
         <Style x:Key="MyButtonStyle" TargetType="Button">
@@ -56,12 +65,7 @@
 
     <DockPanel LastChildFill="True" Margin="10,0,10,0">
 
-        <StackPanel Name="Controls" Margin="0" Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Button MinWidth="100">Reset</Button>
-            <Button MinWidth="100" Margin="10,0,0,0">Save</Button>
-        </StackPanel>
-
-        <StackPanel x:Name="PanelWhite" Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Center" Style="{StaticResource PixeledPink}" >
+        <StackPanel x:Name="PanelWhite" Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Center" Style="{StaticResource PixeledPink}" VerticalAlignment="Top" >
             <TextBlock x:Name="BeforeScoreWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Top" >Score</TextBlock>
             <TextBlock x:Name="ScoreWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Top">0</TextBlock>
             <TextBlock x:Name="BeforeTimerWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Bottom">Temps</TextBlock>
@@ -71,8 +75,14 @@
                 <Button x:Name="BtnWhitePlayer"  BorderBrush="{x:Null}" Style="{StaticResource PannelButtonStyle}" Width="100" Height="100">
                 </Button>
             </StackPanel>
+
+            <StackPanel x:Name="Menu1" VerticalAlignment="Bottom" Margin="0,50,0,0" >
+                <Button x:Name="ResetButton" Style="{StaticResource MenuButtonStyle}" MinWidth="100">Reset</Button>
+                <Button x:Name="UndoButton" Style="{StaticResource MenuButtonStyle}" MinWidth="100">Undo</Button>
+                <Button x:Name="RedoButton" Style="{StaticResource MenuButtonStyle}" MinWidth="100">Redo</Button>
+            </StackPanel>
         </StackPanel>
-        <StackPanel x:Name="PanelBlack" Orientation="Vertical" DockPanel.Dock="Right" HorizontalAlignment="Right" Style="{StaticResource PixeledGreen}">
+        <StackPanel x:Name="PanelBlack" Orientation="Vertical" DockPanel.Dock="Right" HorizontalAlignment="Right" Style="{StaticResource PixeledGreen}" VerticalAlignment="Top">
             <TextBlock x:Name="BeforeScoreBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Score"/></TextBlock>
             <TextBlock x:Name="ScoreBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="0"/></TextBlock>
             <TextBlock x:Name="BeforeTimerBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"><Run Text="Temps"/></TextBlock>
@@ -80,6 +90,11 @@
 
             <StackPanel x:Name="PanelBtnBlackPlayer" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,50,0,0">
                 <Button x:Name="BtnBlackPlayer"  BorderBrush="{x:Null}" Style="{StaticResource PannelButtonStyle}" Width="100" Height="100"/>
+            </StackPanel>
+
+            <StackPanel x:Name="Menu2" VerticalAlignment="Bottom" Margin="0,50,0,0">
+                <Button x:Name="SaveButton" Style="{StaticResource MenuButtonStyle}" >Save</Button>
+                <Button x:Name="LoadButton" Style="{StaticResource MenuButtonStyle}" >Load</Button>
             </StackPanel>
         </StackPanel>
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OthelloIAG5
 {
+    [Serializable]
     public class LegalMove
     {
         protected int[,] boxes;

@@ -44,7 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="Command.cs" />
     <Compile Include="EBoxType.cs" />
+    <Compile Include="FlipCommand.cs" />
     <Compile Include="IA.cs" />
     <Compile Include="LegalMove.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

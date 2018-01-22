@@ -1,24 +1,31 @@
 ﻿using System;
+using OthelloCommand;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using IPlayable;
+using System.Diagnostics;
 
 namespace OthelloIAG5
 {
-
+    [Serializable]
     public class Board : LegalMove, IPlayable.IPlayable
     {
         private const String NAME = "Fasmeyer-Pedretti-SpaceOthello";
         public const int BOARD_SIZE = 8;
         private IA ia;
+        private int timerWhite;
+        private int timerBlack;
+        private bool isWhiteTurn;
+
+        //used for undo
+        private List<Command> _commands;
+        private int _current;
 
         public Board()
         {
             boxes = new int[BOARD_SIZE, BOARD_SIZE];
             ia = new IA(this);
             ResetBoxes();
+            _commands = new List<Command>();
+            _current = 0;
         }
 
         public new void Print()
@@ -59,6 +66,9 @@ namespace OthelloIAG5
             get => boxes.Clone() as int[,];
             set => boxes = (int[,])value.Clone();
         }
+        public int TimerWhite { get => timerWhite; set => timerWhite = value; }
+        public int TimerBlack { get => timerBlack; set => timerBlack = value; }
+        public bool IsWhiteTurn { get => isWhiteTurn; set => isWhiteTurn = value; }
 
         public int this[int col, int row]
         {
@@ -115,7 +125,38 @@ namespace OthelloIAG5
 
         public bool PlayMove(int column, int line, bool isWhite)
         {
-            return ChangeBox(column, line, isWhite, true);
+            Command command = new FlipCommand(this, column, line, isWhite);
+            bool res = command.Execute();
+            _commands.Add(command);
+            _current++;
+
+            return res;
+        }
+
+        public void Undo(int levels = 1)
+        {
+            for(int i = 0; i < levels; i++)
+            {
+                if(_current>0)
+                {
+                    Command command = _commands[--_current] as Command;
+                    isWhiteTurn = command.UnExecute();
+                }
+            }
+        }
+
+        public bool Redo(int levels = 1)
+        {
+            for (int i = 0; i < levels; i++)
+            {
+                if (_current < _commands.Count)
+                {
+                    Command command = _commands[_current++] as Command;
+                    command.Execute();
+                    isWhiteTurn = !isWhiteTurn;
+                }
+            }
+            return isWhiteTurn;
         }
     }
 }
