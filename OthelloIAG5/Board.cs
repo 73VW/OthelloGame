@@ -78,6 +78,7 @@ namespace OthelloIAG5
 
         public Tuple<int, int> GetNextMove(int[,] game, int level, bool whiteTurn)
         {
+            Boxes = game;
             return ia.GetNextMove(game, level, whiteTurn);
         }
 
@@ -98,7 +99,7 @@ namespace OthelloIAG5
             {
                 for (int col = 0; col < BOARD_SIZE; col++)
                 {
-                    if (this.Boxes[row, col] == (int)player)
+                    if (this.Boxes[col, row] == (int)player)
                     {
                         score++;
                     }

@@ -62,6 +62,29 @@ namespace OthelloIAG5
         private void TestBoard()
         {
             Console.WriteLine("Testing Board class...");
+
+            {
+                Board board = new Board();
+                board.Boxes = new int[8, 8]
+                {
+                    {   0,   0,   0,   0,   0,   0,   0,  -1},
+                    {   0,   0,   0,   0,   0,   0,  -1,   1},
+                    {   0,   0,   0,   0,   0,   0,   1,  -1},
+                    {   0,   0,   0,   0,   0,   1,   0,  -1},
+                    {   0,   1,   0,   0,   0,   0,   0,   0},
+                    {   0,   0,   0,   0,   0,   0,   0,  -1},
+                    {   0,   0,   0,   0,   0,   0,   0,  -1},
+                    {   0,   0,   0,   0,   0,   0,   0,  -1},
+                };
+
+                Tuple<int,int> move = board.GetNextMove(board.Boxes, 5, true);
+                board.Print();
+                Console.WriteLine("{0} {1}", move.Item1, move.Item2);
+                int[,] result = board.Boxes;
+                result[3, 7] = 1;
+                board.Boxes = result;
+                board.Print();
+            }
             {
                 Board board = new Board();
                 Console.WriteLine("Initial state:");

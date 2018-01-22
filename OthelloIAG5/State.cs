@@ -8,6 +8,8 @@ namespace OthelloIAG5
     {
         private EBoxType currentType;
 
+        const int MOBILITY_WEIGHT = 100;
+
         // Matrix from http://dhconnelly.com/paip-python/docs/paip/othello.html
 
         public State(int[,] currentState, EBoxType type)
@@ -32,30 +34,64 @@ namespace OthelloIAG5
             get => currentType;
         }
 
+        /// <summary>
+        /// Determines how well is a given player performing.
+        /// A number of values are used to determine what makes a good game state:
+        ///     The number of pawns on the board.
+        ///     The number of avaliable moves.
+        ///     The number of definitive pawns (not modifiable by opponent).
+        ///     The position of the pawn relative to the borders and critical boxes.
+        /// We will note that most of those values are calculated trough evaluation matrix. 
+        /// Only the number of avaliable moves is calculated without the matrix. 
+        /// </summary>
+        /// <returns>
+        /// Performance of the given player - performance of its opponent.
+        /// </returns>
         public double Eval()
         {
             int playerScore = 0;
             int opponentScore = 0;
+            int k = 0;
 
-            // Dynamically modify evalMatrix.
+            int countEmpty = 0;
             for (int row = 0; row < Board.BOARD_SIZE; row++)
             {
                 for (int col = 0; col < Board.BOARD_SIZE; col++)
                 {
-                    Definitive(row, col);
+                    if (boxes[col, row] == (int)EBoxType.free)
+                        countEmpty++;
                 }
             }
+
+            float ratio = countEmpty / 64;
+            k = (int)(ratio * MOBILITY_WEIGHT);
 
             for (int row = 0; row < Board.BOARD_SIZE; row++)
             {
                 for (int col = 0; col < Board.BOARD_SIZE; col++)
                 {
-                    if (boxes[row, col] == (int)currentType)
-                        playerScore += evalMatrix[row, col];
-                    else if (boxes[row, col] != (int)EBoxType.free)
-                        opponentScore += evalMatrix[row, col];
+                    // Calculates the number of avaliable moves.
+                    if (k > 0)
+                    {
+                        if (ChangeBox(col, row, currentType == EBoxType.white))
+                            playerScore += k;
+                        if(ChangeBox(col, row, currentType != EBoxType.white))
+                            opponentScore += k ;
+                    }
+
+                    // Determines which boxes are definitive (opponent can not take it back) and set them at 120 in the evalMatrix.
+                    Definitive(col, row);
+
+                    // Evaluate all pawns using the ponderation (Multiply boxes[x,y] with evalMatrix[x,y]).
+                    // Player score.
+                    if (boxes[col, row] == (int)currentType)
+                        playerScore += evalMatrix[col, row];
+                    // Opponent score.
+                    else if (boxes[col, row] != (int)EBoxType.free)
+                        opponentScore += evalMatrix[col, row];
                 }
             }
+
             return playerScore - opponentScore;
         }
 

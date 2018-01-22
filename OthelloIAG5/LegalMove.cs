@@ -93,16 +93,16 @@ namespace OthelloIAG5
         /// <summary>
         /// Change a evalMatrix box to 120 if it is a definitive one (can not be taken back by the opponent).
         /// </summary>
-        public void Definitive(int row, int col)
+        public void Definitive(int col, int row)
         {
             // Already definitive.
-            if (evalMatrix[row, col] == 120)
+            if (evalMatrix[col, row] == 120)
                 return;
 
-            if (boxes[row, col] == (int)EBoxType.free)
+            if (boxes[col, row] == (int)EBoxType.free)
                 return;
 
-            int currentType = boxes[row, col];
+            int currentType = boxes[col, row];
             int unlockedDirections  = 0;
 
             for (int x = -1; x <= 1; x++)
@@ -130,7 +130,7 @@ namespace OthelloIAG5
                 }
             }
             if (unlockedDirections <= 4)
-                evalMatrix[row, col] = 120;
+                evalMatrix[col, row] = 120;
         }
 
         public static bool InBoardArea(int col, int row)
