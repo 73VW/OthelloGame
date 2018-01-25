@@ -22,6 +22,9 @@ namespace OthelloPedrettiFasmeyer
         public PlayerNames()
         {
             InitializeComponent();
+            WhiteName.Focus();
+            WhiteName.SelectionStart = 0;
+            WhiteName.SelectionLength = WhiteName.Text.Length;
         }
 
         private void GoButton_Click(object sender, RoutedEventArgs e)
@@ -29,6 +32,27 @@ namespace OthelloPedrettiFasmeyer
             if(WhiteName.Text!="" && BlackName.Text != "")
             {
                 this.Close();
+            }
+        }
+
+        private void WhiteName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                BlackName.Focus();
+                BlackName.SelectionStart = 0;
+                BlackName.SelectionLength = BlackName.Text.Length;
+            }
+        }
+
+        private void BlackName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                if (WhiteName.Text != "" && BlackName.Text != "")
+                {
+                    this.Close();
+                }
             }
         }
     }

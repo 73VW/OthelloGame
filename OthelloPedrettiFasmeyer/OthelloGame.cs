@@ -66,7 +66,7 @@ namespace OthelloPedrettiFasmeyer
             mainWindow.gameGrid.Background = Brushes.Black;
             animation = new BrushAnimation
             {
-                Duration = new Duration(TimeSpan.FromSeconds(0.5)),
+                Duration = new Duration(TimeSpan.FromSeconds(0.2)),
             };
             mainWindow.ResetButton.Click += new RoutedEventHandler(ResetGame);
             mainWindow.SaveButton.Click += new RoutedEventHandler(SaveGame);
