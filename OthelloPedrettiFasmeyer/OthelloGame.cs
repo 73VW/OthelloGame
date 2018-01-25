@@ -12,6 +12,9 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Resources;
 using System.Windows.Media.Imaging;
+using System.Activities.Statements;
+using System.Activities;
+using System.Windows.Media.Animation;
 
 namespace OthelloPedrettiFasmeyer
 {
@@ -34,6 +37,7 @@ namespace OthelloPedrettiFasmeyer
         private DispatcherTimer dispatcherTimer;
         private bool endGame;
         private MainWindow mainWindow;
+        private BrushAnimation animation;
 
         public OthelloGame(MainWindow mainWindow)
         {
@@ -59,6 +63,11 @@ namespace OthelloPedrettiFasmeyer
 
         private void InitGame()
         {
+            mainWindow.gameGrid.Background = Brushes.Black;
+            animation = new BrushAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(0.5)),
+            };
             mainWindow.ResetButton.Click += new RoutedEventHandler(ResetGame);
             mainWindow.SaveButton.Click += new RoutedEventHandler(SaveGame);
             mainWindow.LoadButton.Click += new RoutedEventHandler(LoadGame);
@@ -72,12 +81,20 @@ namespace OthelloPedrettiFasmeyer
                 mainWindow.gameGrid.ColumnDefinitions.Add(columnDefinition);
                 mainWindow.gameGrid.RowDefinitions.Add(rowDefinition);
             }
+
+            FillBoard();
+
+
+        }
+
+        private void FillBoard()
+        {
             Style style = mainWindow.FindResource("MyButtonStyle") as Style;
 
             //Fill each case of the board
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < Board.BOARD_SIZE; i++)
             {
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < Board.BOARD_SIZE; j++)
                 {
                     Button b = new Button
                     {
@@ -87,14 +104,12 @@ namespace OthelloPedrettiFasmeyer
                     b.MouseEnter += new MouseEventHandler(MouseEnter);
                     b.MouseLeave += new MouseEventHandler(MouseLeave);
                     b.BorderBrush = null;
-                    b.Background = System.Windows.Media.Brushes.Transparent;
+                    b.Background = System.Windows.Media.Brushes.Black;
                     Grid.SetRow(b, i);
                     Grid.SetColumn(b, j);
                     mainWindow.gameGrid.Children.Add(b);
                 }
             }
-
-
         }
 
         private void Redo(object sender, RoutedEventArgs e)
@@ -119,11 +134,13 @@ namespace OthelloPedrettiFasmeyer
             dispatcherTimer.Stop();
 
             Board loadedBoard = SaveManager.DeserializeObject<Board>();
-            if(loadedBoard!=null)
+            if (loadedBoard != null)
             {
                 board = loadedBoard;
                 blackPlayer.Timer = loadedBoard.TimerBlack;
                 whitePlayer.Timer = loadedBoard.TimerWhite;
+                mainWindow.WhitePlayerName.Text = board.WhitePlayerName;
+                mainWindow.BlackPlayerName.Text = board.BlackPlayerName;
                 whiteTurn = loadedBoard.IsWhiteTurn;
                 UpdateGrid();
                 ToggleTurnUi();
@@ -141,6 +158,8 @@ namespace OthelloPedrettiFasmeyer
         {
             dispatcherTimer.Stop();
 
+            board.WhitePlayerName = mainWindow.WhitePlayerName.Text;
+            board.BlackPlayerName = mainWindow.BlackPlayerName.Text;
             board.IsWhiteTurn = whiteTurn;
             board.TimerBlack = blackPlayer.Timer;
             board.TimerWhite = whitePlayer.Timer;
@@ -152,6 +171,8 @@ namespace OthelloPedrettiFasmeyer
 
         private void ResetGame(object sender, RoutedEventArgs e)
         {
+            mainWindow.gameGrid.Children.Clear();
+            FillBoard();
             LaunchGame();
         }
 
@@ -214,8 +235,10 @@ namespace OthelloPedrettiFasmeyer
             cantPlay = 0;
             nbEmptyCells = 0;
 
-            board = new Board();
-            board.IsWhiteTurn = whiteTurn;
+            board = new Board
+            {
+                IsWhiteTurn = whiteTurn
+            };
             board.ResetBoxes();
 
             whitePlayer.Reset();
@@ -284,16 +307,49 @@ namespace OthelloPedrettiFasmeyer
                 var col = Grid.GetColumn(button);
                 var row = Grid.GetRow(button);
                 if (board[col, row] == (int)EBoxType.black)
+                {
+                    if (!button.Background.Equals(blackBrush))
+                    {
+                        try
+                        {
+                            animation.From = button.Background;
+                        animation.To = blackBrush;
+                        Storyboard.SetTarget(animation, button);
+                        Storyboard.SetTargetProperty(animation, new PropertyPath("Background"));
+
+                        var sb = new Storyboard();
+                        sb.Children.Add(animation);
+                        sb.Begin();
+                        }
+                        catch { }
+                    }
                     button.Background = blackBrush;
+                }
                 else if (board[col, row] == (int)EBoxType.white)
+                {
+                    if (!button.Background.Equals(whiteBrush))
+                    {
+                        try
+                        {
+                            animation.From = button.Background;
+                            animation.To = whiteBrush;
+                            Storyboard.SetTarget(animation, button);
+                            Storyboard.SetTargetProperty(animation, new PropertyPath("Background"));
+
+                            var sb = new Storyboard();
+                            sb.Children.Add(animation);
+                            sb.Begin();
+                        }
+                        catch { }
+                    }
                     button.Background = whiteBrush;
+                }
                 else
                 {
+                    button.Background = Brushes.Black;
                     nbEmptyCells++;
                 }
             }
-
-
             UpdateScore();
         }
 
@@ -302,27 +358,37 @@ namespace OthelloPedrettiFasmeyer
         /// </summary>
         private void UpdateScore()
         {
-            this.whitePlayer.Score = this.board.GetWhiteScore();
-            this.blackPlayer.Score = this.board.GetBlackScore();
-
-            SolidColorBrush brush = new SolidColorBrush(System.Windows.Media.Colors.White)
-            {
-                Opacity = 1
-            };
+            whitePlayer.Score = board.GetWhiteScore();
+            blackPlayer.Score = board.GetBlackScore();
+            Brush brush;
             if (this.whitePlayer.Score > this.blackPlayer.Score)
             {
-                mainWindow.PanelBtnWhitePlayer.Background = brush;
-                mainWindow.PanelBtnBlackPlayer.Background = System.Windows.Media.Brushes.Black;
+                brush = whiteBrushCanPlay.Clone();
+                brush.Opacity = 0.15;
             }
             else if (this.whitePlayer.Score < this.blackPlayer.Score)
             {
-                mainWindow.PanelBtnWhitePlayer.Background = System.Windows.Media.Brushes.Black;
-                mainWindow.PanelBtnBlackPlayer.Background = brush;
+                brush = blackBrushCanPlay.Clone();
+                brush.Opacity = 0.15;
             }
             else
             {
-                mainWindow.PanelBtnWhitePlayer.Background = System.Windows.Media.Brushes.Black;
-                mainWindow.PanelBtnBlackPlayer.Background = System.Windows.Media.Brushes.Black;
+                brush = System.Windows.Media.Brushes.Black;
+            }
+            if (!mainWindow.gameGrid.Background.Equals(brush))
+            {
+                try
+                {
+                    animation.From = mainWindow.gameGrid.Background;
+                    animation.To = brush;
+                    Storyboard.SetTarget(animation, mainWindow.gameGrid);
+                    Storyboard.SetTargetProperty(animation, new PropertyPath("Background"));
+
+                    var sb = new Storyboard();
+                    sb.Children.Add(animation);
+                    sb.Begin();
+                }
+                catch { }
             }
         }
 
@@ -394,7 +460,7 @@ namespace OthelloPedrettiFasmeyer
                 this.LaunchGame();
                 return;
             }
-            
+
             var col = Grid.GetColumn(button);
             var row = Grid.GetRow(button);
 

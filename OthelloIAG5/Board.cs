@@ -14,6 +14,8 @@ namespace OthelloIAG5
         private int timerWhite;
         private int timerBlack;
         private bool isWhiteTurn;
+        private string whitePlayerName;
+        private string blackPlayerName;
 
         //used for undo
         private List<Command> _commands;
@@ -69,6 +71,8 @@ namespace OthelloIAG5
         public int TimerWhite { get => timerWhite; set => timerWhite = value; }
         public int TimerBlack { get => timerBlack; set => timerBlack = value; }
         public bool IsWhiteTurn { get => isWhiteTurn; set => isWhiteTurn = value; }
+        public string WhitePlayerName { get => whitePlayerName; set => whitePlayerName = value; }
+        public string BlackPlayerName { get => blackPlayerName; set => blackPlayerName = value; }
 
         public int this[int col, int row]
         {

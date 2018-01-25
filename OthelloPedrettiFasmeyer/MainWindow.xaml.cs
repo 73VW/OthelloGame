@@ -23,10 +23,21 @@ namespace OthelloPedrettiFasmeyer
 
         public MainWindow()
         {
-
+            PlayerNames playerNames;
+            string whiteName = "White player";
+            string blackName = "Black player";
+            do
+            {
+                playerNames = new PlayerNames();
+                playerNames.ShowDialog();
+                whiteName = playerNames.WhiteName.Text;
+                blackName = playerNames.BlackName.Text;
+            } while (playerNames.WhiteName.Text == "" || playerNames.BlackName.Text == "");
             InitializeComponent();
             MinWidth = 800;
             MinHeight = 600;
+            WhitePlayerName.Text = whiteName;
+            BlackPlayerName.Text = blackName;
 
             new OthelloGame(this);
         }

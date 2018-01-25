@@ -20,12 +20,12 @@ namespace OthelloIAG5
 
         private void TestState()
         {
-            Console.WriteLine("Testing State class...");
+            Console.WriteLine("Testing GameState class...");
 
             // Eval
             {
                 Board board = new Board();
-                State state = new State(board.Boxes, EBoxType.black);
+                GameState state = new GameState(board.Boxes, EBoxType.black);
                 Debug.Assert(state.Eval() == 0);
             }
             {
@@ -36,7 +36,7 @@ namespace OthelloIAG5
                 game[1, 1] = 1;
                 game[0, 1] = 1;
 
-                State state = new State(game, EBoxType.black);
+                GameState state = new GameState(game, EBoxType.black);
                 state.Eval();
 
                 int[,] evalBoard = state.EvalMatrix;

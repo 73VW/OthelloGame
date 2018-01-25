@@ -1,0 +1,26 @@
+﻿<Window x:Class="OthelloPedrettiFasmeyer.PlayerNames"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OthelloPedrettiFasmeyer"
+        mc:Ignorable="d"
+        Title="Player names" Width="500" ResizeMode="NoResize" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Background="Black" Height="200" WindowStartupLocation="CenterScreen" Topmost="True">
+    <DockPanel LastChildFill="True" Margin="10,0,10,0">
+
+        <StackPanel x:Name="PanelWhite" Orientation="Vertical" DockPanel.Dock="Left" HorizontalAlignment="Center" Style="{StaticResource PixeledPink}" VerticalAlignment="Top" >
+            <TextBlock x:Name="BeforeNameWhite" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource PixeledPink}" >Player 1</TextBlock>
+            <TextBox x:Name="WhiteName" TextWrapping="Wrap" Text="Player 1" Width="200"/>
+
+        </StackPanel>
+        <StackPanel x:Name="PanelBlack" Orientation="Vertical" DockPanel.Dock="Right" HorizontalAlignment="Center" Style="{StaticResource PixeledGreen}" VerticalAlignment="Top">
+            <TextBlock x:Name="BeforeNameBlack" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource PixeledGreen}">Player 2</TextBlock>
+            <TextBox x:Name="BlackName" TextWrapping="Wrap" Text="Player 2" Width="200
+                     "/>
+        </StackPanel>
+        <StackPanel x:Name="Menu" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+            <Button x:Name="GoButton" Style="{StaticResource MenuButtonStyle}" HorizontalContentAlignment="Center" Click="GoButton_Click" >Go!</Button>
+        </StackPanel>
+
+    </DockPanel>
+</Window>

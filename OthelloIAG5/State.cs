@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace OthelloIAG5
 {
     /// <summary>Specific methods for the AlphaBeta algorithm.</summary>
-    public class State : LegalMove
+    public class GameState : LegalMove
     {
         private EBoxType currentType;
 
@@ -12,7 +12,7 @@ namespace OthelloIAG5
 
         // Matrix from http://dhconnelly.com/paip-python/docs/paip/othello.html
 
-        public State(int[,] currentState, EBoxType type)
+        public GameState(int[,] currentState, EBoxType type)
         {
             this.boxes = currentState;
             this.currentType = type;
@@ -119,14 +119,14 @@ namespace OthelloIAG5
             return moveList;
         }
 
-        public State Apply(Tuple<int, int> move)
+        public GameState Apply(Tuple<int, int> move)
         {
             int[,] newState = (int[,])boxes.Clone();
             newState[move.Item1, move.Item2] = (int)currentType;
             EBoxType newType;
             if (currentType == EBoxType.white) newType = EBoxType.black;
             else newType = EBoxType.white;
-            return new State(newState, newType);
+            return new GameState(newState, newType);
         }
     }
 }
