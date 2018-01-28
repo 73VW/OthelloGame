@@ -299,7 +299,7 @@ namespace OthelloPedrettiFasmeyer
         }
 
         /// <summary>
-        /// Change the opacity of the players pawns depending on the turn..
+        /// Change the opacity of the player icon depending on who's turn it is. Highlight current player's icon.
         /// </summary>
         private void ToggleTurnUi()
         {
