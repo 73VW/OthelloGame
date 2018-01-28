@@ -95,6 +95,9 @@ namespace OthelloIAG5
             return playerScore - opponentScore;
         }
 
+        /// <summary>
+        /// Tells if every boxes are full, end game.
+        /// </summary>
         public bool Final()
         {
             //if one of the box is empty
@@ -119,6 +122,10 @@ namespace OthelloIAG5
             return moveList;
         }
 
+        /// <summary>
+        /// Apply a give move (x, y) and return the new state-
+        /// </summary>
+        /// <returns></returns>
         public State Apply(Tuple<int, int> move)
         {
             int[,] newState = (int[,])boxes.Clone();
