@@ -6,12 +6,16 @@ using System.Threading.Tasks;
 
 namespace OthelloIAG5
 {
+    [Serializable]
     public class LegalMove
     {
         protected int[,] boxes;
         protected int[,] evalMatrix;
 
-        //because this function is used in two classes I decided to put it in a separate class.
+        /// <summary>
+        /// Used to check if a move is playable OR to play a move and switch the pawns color.
+        /// </summary>
+        /// <returns>false if a problem occured.</returns>
         public bool ChangeBox(int col, int row, bool isWhite, bool apply = false)
         {
             int box = boxes[col, row];

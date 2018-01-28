@@ -4,6 +4,23 @@
              xmlns:local="clr-namespace:OthelloPedrettiFasmeyer"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="PixeledGreen">
+            <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
+            <Setter Property="TextElement.Foreground"  Value="#FF00FF17" />
+            <Setter Property="TextElement.FontSize" Value="15"/>
+        </Style>
+        <Style x:Key="PixeledPink">
+            <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
+            <Setter Property="TextElement.Foreground"  Value="#FF00C5" />
+            <Setter Property="TextElement.FontSize" Value="15"/>
+        </Style>
+        <Style TargetType="Button" x:Key="MenuButtonStyle">
+            <Setter Property="TextElement.FontFamily"  Value="pack://application:,,,/fonts/#Pixeled" />
+            <Setter Property="Background" Value="#ff0033cc"/>
+            <Setter Property="TextElement.Foreground"  Value="white" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="TextElement.FontSize" Value="15"/>
+        </Style>
     </Application.Resources>
 </Application>
