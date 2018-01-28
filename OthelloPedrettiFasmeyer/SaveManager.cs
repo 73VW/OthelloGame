@@ -19,12 +19,15 @@ namespace OthelloPedrettiFasmeyer
 
         public const String FILES_FILTER = "Space Othello files (*.so)|*.so";
 
+		/// <summary>
+        /// Save serializable to file.
+        /// </summary>
         public static void SerializeObject<T>(T serializable)
         {
             SaveFileDialog sfd = GetSfd();
 
             if (sfd.ShowDialog() == true)
-            { //User chose a file
+            {
                 if (sfd.FileName != "")
                 {
                     try
@@ -45,7 +48,9 @@ namespace OthelloPedrettiFasmeyer
                 }
             }
         }
-
+		/// <summary>
+        /// Load serializable from file.
+        /// </summary>
         public static T DeserializeObject<T>()
         {
             OpenFileDialog ofd = GetOfd();

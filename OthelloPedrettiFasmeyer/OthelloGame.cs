@@ -60,7 +60,9 @@ namespace OthelloPedrettiFasmeyer
 
             LaunchGame();
         }
-
+		/// <summary>
+        /// Init game.
+        /// </summary>
         private void InitGame()
         {
             mainWindow.gameGrid.Background = Brushes.Black;
@@ -254,10 +256,8 @@ namespace OthelloPedrettiFasmeyer
 
             whiteTurn = true;
 
-            //update the ui toggle turn
             ToggleTurnUi();
 
-            //reset count
             cantPlay = 0;
             nbEmptyCells = 0;
 

@@ -40,7 +40,7 @@ Afin de pouvoir annuler un coup ou le rejouer, le Design Pattern "Command" a ét
 Sauvegarde de la partie
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Grace à la technoologie employée, il est facile d'implémenter une enregistration de partie. De ce fait, il est possible pour les joueur de sauvegarder leur partie et de la recharger au besoin.
+Grâce à la technologie employée (c#), il est facile d'implémenter un système de sauvegarde de partie. De ce fait, il est possible pour les joueur de sauvegarder leur partie et de la recharger au besoin.
 
 Reset
 ^^^^^
@@ -50,4 +50,4 @@ Il est possible de recommencer le jeu à zéro en appuyant sur le bouton "Reset"
 Nom du joueur
 ^^^^^^^^^^^^^
 
-Au lancement du jeu, un formule demande le nom des joueurs. Il est possible de garder les noms préremplis, soit "Player 1" et "Player 2".
+Au lancement du jeu, un formulaire demande le nom des joueurs. Il est possible de garder les noms par défaut, soit "Player 1" et "Player 2".
